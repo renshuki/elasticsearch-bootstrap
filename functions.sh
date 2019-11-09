@@ -158,3 +158,17 @@ download_kb()
     fi
 }
 
+extract_kb()
+{
+    echo "Extracting Kibana from the archive..."
+    kb_archive_path="$1/$2"
+    tar xzvf "$kb_archive_path" --directory "$1"
+    tar_res=$?
+
+    if test "$tar_res" == "0"; then
+        echo -e "${GREEN}Kibana extracted successfully!${NC}\r\n"
+    else
+        echo -e "${RED}Kibana extraction failed.${NC}\r\n"
+        exit 1
+    fi
+}

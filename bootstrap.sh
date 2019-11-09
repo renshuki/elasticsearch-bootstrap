@@ -124,4 +124,7 @@ done
 # Download Kibana
 download_kb $installdir $kb_filename
 
+# Extract Kibana archive
+extract_kb $installdir $kb_filename
+
 echo -e "${YELLOW}Congratulations! You're done!${NC}"
