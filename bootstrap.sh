@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "functions.sh"
+
 banner=$(cat << EOF
   ____              _       _                                 
  |  _ \            | |     | |                                
@@ -18,10 +20,11 @@ EOF
 
 echo -e "$banner"
 
+# Check OS
 while :
 do
 echo -e "Select your Operating System:\n 1. Linux\n 2. macOS\n 3. Auto-detect\n 4. Quit\r\n"
-read ostype
+read -p "[Auto-detect]: " ostype
     case $ostype in
         1)
             echo -e "Linux\r\n"
@@ -32,7 +35,10 @@ read ostype
             break
             ;;
         3)
-            echo -e "Not implemented yet...\r\n"
+            check_os_version
+            ;;
+        "")
+            check_os_version
             ;;
         4)
             exit 0
@@ -42,11 +48,13 @@ read ostype
     esac
 done
 
-read -p "Elasticsearch version to install (e.g. 7.4.0): " esversion
+# Check Elasticsearch version
+read -p "Elasticsearch version to install (e.g. 7.4.0) [latest]: " esversion
+check_es_version $ostype $esversion
 
-echo "Elasticsearch version found!"
-echo "Elasticsearch version not found! :/"
-echo "Installing Elasticsearch ($esversion)..."
+echo "Elasticsearch version found for $ostype!"
+echo "Elasticsearch version not found for $ostype! :/"
+echo "Installing Elasticsearch ($esversion) for $ostype..."
 
 
 # https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.4.2-darwin-x86_64.tar.gz
