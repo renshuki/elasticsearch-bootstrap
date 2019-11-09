@@ -172,3 +172,17 @@ extract_kb()
         exit 1
     fi
 }
+
+delete_kb_archive()
+{
+    echo "Deleting Kibana archive file..."
+    rm -v "$kb_archive_path"
+    rm_res=$?
+
+    if test "$rm_res" == "0"; then
+        echo -e "${GREEN}Kibana archive file removed successfully!${NC}\r\n"
+    else
+        echo -e "${RED}Kibana archive file deletion failure.${NC}\r\n"
+        exit 1
+    fi
+}

@@ -127,4 +127,26 @@ download_kb $installdir $kb_filename
 # Extract Kibana archive
 extract_kb $installdir $kb_filename
 
+# Delete Kibana archive
+while :
+do
+    read -p "Delete Kibana archive file (tar.gz)? [y/N]" kbdelete
+    case $kbdelete in
+        "y")
+            delete_kb_archive $es_archive_path
+            break
+            ;;
+        "n")
+            echo -e "${GREEN}Skip deletion...${NC}\r\n"
+            break
+            ;;
+        "")
+            echo -e "${GREEN}Skip deletion...${NC}\r\n"
+            break
+            ;;
+        *)
+           echo -e "${RED}Incorrect input, try again.${NC}\r\n" 
+    esac
+done
+
 echo -e "${YELLOW}Congratulations! You're done!${NC}"
