@@ -65,7 +65,7 @@ check_install_dir()
 download_es()
 {
     if [ -f "$installdir/$es_filename" ]; then
-        echo -e "${RED} Elasticsearch archive file already exists in this location. Skip.${NC}\r\n"
+        echo -e "${RED}Elasticsearch archive file already exists in this location. Skip.${NC}\r\n"
     else
         echo "Downloading Elasticsearch ($esversion) for $osname..."
         cd $1 && curl -O $full_es_url
@@ -139,3 +139,22 @@ check_kb_version()
         echo -e "${RED}Kibana version $kbversion not found for $osname! :/${NC}\r\n"
     fi
 }
+
+download_kb()
+{
+    if [ -f "$installdir/$kb_filename" ]; then
+        echo -e "${RED}Kibana archive file already exists in this location. Skip.${NC}\r\n"
+    else
+        echo "Downloading Kibana ($esversion) for $osname..."
+        cd $1 && curl -O $full_kb_url
+        dl_res=$?
+
+        if test "$dl_res" == "0"; then
+            echo -e "${GREEN}Download completed successfully!${NC}\r\n"
+        else
+            echo -e "${RED}Download failed for some reasons.${NC}\r\n"
+            exit 1
+        fi
+    fi
+}
+

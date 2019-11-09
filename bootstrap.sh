@@ -100,7 +100,7 @@ do
     esac
 done
 
-# Download Kibana alongside Elasticsearch
+# Kibana alongside Elasticsearch
 while :
 do
     read -p "Download Kibana alongside Elasticsearch? [y/N]" kbdl
@@ -120,5 +120,8 @@ do
             echo -e "${RED}Incorrect input, try again.${NC}\r\n" 
     esac
 done
+
+# Download Kibana
+download_kb $installdir $kb_filename
 
 echo -e "${YELLOW}Congratulations! You're done!${NC}"
