@@ -21,10 +21,24 @@ check_es_version()
     full_url="$base_url$2$suffix_url"
     http_response=`curl -I "$full_url" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
 
-
     if [[ $http_response == 200 ]]; then
-        echo -e "${GREEN}Elasticsearch version $2 found for $osname!${NC}"
+        echo -e "${GREEN}Elasticsearch version $2 found for $osname!${NC}\r\n"
     else
-        echo -e "${RED}Elasticsearch version $2 not found for $osname! :/${NC}"
+        echo -e "${RED}Elasticsearch version $2 not found for $osname! :/${NC}\r\n"
     fi
+}
+
+check_install_dir()
+{
+    if [ -d "$1" ]; then
+        echo -e "${GREEN}$1 is a directory.${NC}\r\n"
+    else
+        echo -e "${RED}$1 is not a directory.${NC}\r\n"
+    fi  
+}
+
+download_es()
+{
+    echo "Downloading Elasticsearch ($esversion) for $osname..."
+
 }
