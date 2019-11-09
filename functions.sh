@@ -2,7 +2,16 @@
 
 check_os_version()
 {
-    echo -e "Not implemented yet...\r\n"
+    if [ `uname` == "Linux" ]; then
+        echo -e "${GREEN}Linux${NC}\r\n"
+        osname="Linux"
+    elif [ `uname` == "Darwin" ]; then
+        echo -e  "${GREEN}macOS${NC}\r\n"
+        osname="macOS"
+    else
+        echo -e  "${RED}Unknown OS. Abort.${NC}\r\n"
+        exit 1
+    fi
 }
 
 check_es_version()

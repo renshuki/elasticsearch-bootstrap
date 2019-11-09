@@ -44,9 +44,11 @@ do
             ;;
         3)
             check_os_version
+            break
             ;;
         "")
             check_os_version
+            break
             ;;
         4)
             exit 0
