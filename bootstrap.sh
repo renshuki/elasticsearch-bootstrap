@@ -28,10 +28,12 @@ read -p "[Auto-detect]: " ostype
     case $ostype in
         1)
             echo -e "Linux\r\n"
+            osname="Linux"
             break
             ;;
         2)
             echo -e  "macOS\r\n"
+            osname="macOS"
             break
             ;;
         3)
@@ -52,9 +54,7 @@ done
 read -p "Elasticsearch version to install (e.g. 7.4.0) [latest]: " esversion
 check_es_version $ostype $esversion
 
-echo "Elasticsearch version found for $ostype!"
-echo "Elasticsearch version not found for $ostype! :/"
-echo "Installing Elasticsearch ($esversion) for $ostype..."
+echo "Downloading Elasticsearch ($esversion) for $osname..."
 
 
 # https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.4.2-darwin-x86_64.tar.gz
