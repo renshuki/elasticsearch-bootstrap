@@ -42,5 +42,12 @@ check_install_dir()
 download_es()
 {
     echo "Downloading Elasticsearch ($esversion) for $osname..."
+    cd $1 && curl -O $full_url
+    res=$?
 
+    if test "$res" == "0"; then
+        echo -e "${GREEN}Download completed successfully!${NC}\r\n"
+    else
+        echo -e "${RED}Download failed for some reasons.${NC}\r\n"
+    fi
 }

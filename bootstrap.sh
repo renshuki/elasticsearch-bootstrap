@@ -33,12 +33,12 @@ echo -e "Select your Operating System:\n 1. Linux\n 2. macOS\n 3. Auto-detect\n 
 read -p "[Auto-detect]: " ostype
     case $ostype in
         1)
-            echo -e "Linux\r\n"
+            echo -e "${GREEN}Linux${NC}\r\n"
             osname="Linux"
             break
             ;;
         2)
-            echo -e  "macOS\r\n"
+            echo -e  "${GREEN}macOS${NC}\r\n"
             osname="macOS"
             break
             ;;
@@ -52,7 +52,7 @@ read -p "[Auto-detect]: " ostype
             exit 0
             ;;
         *)
-            echo -e "Incorrect input, try again.\r\n"
+            echo -e "${RED}Incorrect input, try again.${NC}\r\n"
     esac
 done
 
@@ -69,5 +69,8 @@ do
     read -p "Choose your installation directory [${HOME}]: " installdir
     check_install_dir $installdir
 done
+
+# Download Elasticsearch in the given directory
+download_es $installdir
 
 echo -e "${YELLOW}Congratulations! You're done!${NC}"
