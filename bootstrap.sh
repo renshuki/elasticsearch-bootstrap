@@ -73,4 +73,7 @@ done
 # Download Elasticsearch in the given directory
 download_es $installdir
 
+# Extract Elasticsearch
+extract_es $installdir $filename
+
 echo -e "${YELLOW}Congratulations! You're done!${NC}"

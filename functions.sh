@@ -7,18 +7,18 @@ check_os_version()
 
 check_es_version()
 {
-    base_url="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-"
+    base_url="https://artifacts.elastic.co/downloads/elasticsearch/"
 
     case $1 in
         1)
-            suffix_url="-linux-x86_64.tar.gz"
+            filename="elasticsearch-$2-linux-x86_64.tar.gz"
             ;;
         2)
-            suffix_url="-darwin-x86_64.tar.gz"
+            filename="elasticsearch-$2-darwin-x86_64.tar.gz"
             ;;
     esac
 
-    full_url="$base_url$2$suffix_url"
+    full_url="$base_url$filename"
     http_response=`curl -I "$full_url" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
 
     if [[ $http_response == 200 ]]; then
@@ -49,5 +49,20 @@ download_es()
         echo -e "${GREEN}Download completed successfully!${NC}\r\n"
     else
         echo -e "${RED}Download failed for some reasons.${NC}\r\n"
+        exit 1
+    fi
+}
+
+extract_es()
+{
+    echo "Extracting Elasticsearch from the archive..."
+    tar xzvf "$1/$2" --directory "$1"
+    tar_res=$?
+
+    if test "$tar_res" == "0"; then
+        echo -e "${GREEN}Elasticsearch extracted successfully!${NC}\r\n"
+    else
+        echo -e "${RED}Elasticsearch extraction failed.${NC}\r\n"
+        exit 1
     fi
 }
