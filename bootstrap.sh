@@ -73,10 +73,10 @@ do
 done
 
 # Download Elasticsearch in the given directory
-download_es $installdir $filename
+download_es $installdir $es_filename
 
 # Extract Elasticsearch
-extract_es $installdir $filename
+extract_es $installdir $es_filename
 
 # Delete Elasticsearch archive
 while :
@@ -97,6 +97,27 @@ do
             ;;
         *)
            echo -e "${RED}Incorrect input, try again.${NC}\r\n" 
+    esac
+done
+
+# Download Kibana alongside Elasticsearch
+while :
+do
+    read -p "Download Kibana alongside Elasticsearch? [y/N]" kbdl
+    case $kbdl in
+        "y")
+            check_kb_version $ostype $kbdl
+            ;;
+        "n")
+            echo -e "${GREEN}Skip Kibana installation...${NC}\r\n"
+            break
+            ;;
+        "")
+            echo -e "${GREEN}Skip Kibana installation...${NC}\r\n"
+            break
+            ;;
+        *)
+            echo -e "${RED}Incorrect input, try again.${NC}\r\n" 
     esac
 done
 
