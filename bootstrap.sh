@@ -18,3 +18,36 @@ EOF
 
 echo -e "$banner"
 
+while :
+do
+echo -e "Select your Operating System:\n 1. Linux\n 2. macOS\n 3. Auto-detect\n 4. Quit\r\n"
+read ostype
+    case $ostype in
+        1)
+            echo -e "Linux\r\n"
+            break
+            ;;
+        2)
+            echo -e  "macOS\r\n"
+            break
+            ;;
+        3)
+            echo -e "Not implemented yet...\r\n"
+            ;;
+        4)
+            exit 0
+            ;;
+        *)
+            echo -e "Incorrect input, try again.\r\n"
+    esac
+done
+
+read -p "Elasticsearch version to install (e.g. 7.4.0): " esversion
+
+echo "Elasticsearch version found!"
+echo "Elasticsearch version not found! :/"
+echo "Installing Elasticsearch ($esversion)..."
+
+
+# https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.4.2-darwin-x86_64.tar.gz
+# https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.4.2-linux-x86_64.tar.gz
