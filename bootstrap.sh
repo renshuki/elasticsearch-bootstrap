@@ -61,7 +61,7 @@ done
 # Check Elasticsearch version
 while :
 do
-    read -p "Elasticsearch version to install (e.g. 7.4.0) [latest]: " esversion
+    read -p "Elasticsearch version to install (e.g. 7.4.0): " esversion
     check_es_version $ostype $esversion
 done
 
