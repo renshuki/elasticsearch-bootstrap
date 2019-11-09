@@ -2,6 +2,11 @@
 
 source "functions.sh"
 
+# COLORS
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
 banner=$(cat << EOF
   ____              _       _                                 
  |  _ \            | |     | |                                
@@ -54,7 +59,7 @@ done
 read -p "Elasticsearch version to install (e.g. 7.4.0) [latest]: " esversion
 check_es_version $ostype $esversion
 
-echo "Downloading Elasticsearch ($esversion) for $osname..."
+echo -e "Downloading Elasticsearch ($esversion) for $osname..."
 
 
 # https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.4.2-darwin-x86_64.tar.gz

@@ -23,8 +23,8 @@ check_es_version()
 
 
     if [[ $http_response == 200 ]]; then
-        echo "Elasticsearch version $2 found for $osname!"
+        echo -e "${GREEN}Elasticsearch version $2 found for $osname!${NC}"
     else
-        echo "Elasticsearch version $2 not found for $osname! :/"
+        echo -e "${RED}Elasticsearch version $2 not found for $osname! :/${NC}"
     fi
 }
