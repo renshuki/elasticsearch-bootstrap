@@ -57,11 +57,17 @@ read -p "[Auto-detect]: " ostype
 done
 
 # Check Elasticsearch version
-read -p "Elasticsearch version to install (e.g. 7.4.0) [latest]: " esversion
-check_es_version $ostype $esversion
+while :
+do
+    read -p "Elasticsearch version to install (e.g. 7.4.0) [latest]: " esversion
+    check_es_version $ostype $esversion
+done
 
 # Check installation directory
-read -p "Choose your installation directory [${HOME}]: " installdir
-check_install_dir $installdir
+while :
+do
+    read -p "Choose your installation directory [${HOME}]: " installdir
+    check_install_dir $installdir
+done
 
 echo -e "${YELLOW}Congratulations! You're done!${NC}"

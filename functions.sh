@@ -23,6 +23,7 @@ check_es_version()
 
     if [[ $http_response == 200 ]]; then
         echo -e "${GREEN}Elasticsearch version $2 found for $osname!${NC}\r\n"
+        break
     else
         echo -e "${RED}Elasticsearch version $2 not found for $osname! :/${NC}\r\n"
     fi
@@ -32,6 +33,7 @@ check_install_dir()
 {
     if [ -d "$1" ]; then
         echo -e "${GREEN}$1 is a directory.${NC}\r\n"
+        break
     else
         echo -e "${RED}$1 is not a directory.${NC}\r\n"
     fi  
