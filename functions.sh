@@ -41,28 +41,47 @@ check_install_dir()
 
 download_es()
 {
-    echo "Downloading Elasticsearch ($esversion) for $osname..."
-    cd $1 && curl -O $full_url
-    res=$?
-
-    if test "$res" == "0"; then
-        echo -e "${GREEN}Download completed successfully!${NC}\r\n"
+    if [ -f "$installdir/$filename" ]; then
+        echo -e "${RED} Elasticsearch archive file already exists in this location. Skip.${NC}\r\n"
     else
-        echo -e "${RED}Download failed for some reasons.${NC}\r\n"
-        exit 1
+        echo "Downloading Elasticsearch ($esversion) for $osname..."
+        cd $1 && curl -O $full_url
+        dl_res=$?
+
+        if test "$dl_res" == "0"; then
+            echo -e "${GREEN}Download completed successfully!${NC}\r\n"
+        else
+            echo -e "${RED}Download failed for some reasons.${NC}\r\n"
+            exit 1
+        fi
     fi
 }
 
 extract_es()
 {
     echo "Extracting Elasticsearch from the archive..."
-    tar xzvf "$1/$2" --directory "$1"
+    es_archive_path="$1/$2"
+    tar xzvf "$es_archive_path" --directory "$1"
     tar_res=$?
 
     if test "$tar_res" == "0"; then
         echo -e "${GREEN}Elasticsearch extracted successfully!${NC}\r\n"
     else
         echo -e "${RED}Elasticsearch extraction failed.${NC}\r\n"
+        exit 1
+    fi
+}
+
+delete_es_archive()
+{
+    echo "Deleting Elasticsearch archive file..."
+    rm -v "$es_archive_path"
+    rm_res=$?
+
+    if test "$rm_res" == "0"; then
+        echo -e "${GREEN}Elasticsearch archive file removed successfully!${NC}\r\n"
+    else
+        echo -e "${RED}Elasticsearch archive file deletion failure.${NC}\r\n"
         exit 1
     fi
 }

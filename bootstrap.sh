@@ -29,8 +29,8 @@ echo -e "$banner"
 # Check OS
 while :
 do
-echo -e "Select your Operating System:\n 1. Linux\n 2. macOS\n 3. Auto-detect\n 4. Quit\r\n"
-read -p "[Auto-detect]: " ostype
+    echo -e "Select your Operating System:\n 1. Linux\n 2. macOS\n 3. Auto-detect\n 4. Quit\r\n"
+    read -p "[Auto-detect]: " ostype
     case $ostype in
         1)
             echo -e "${GREEN}Linux${NC}\r\n"
@@ -71,9 +71,31 @@ do
 done
 
 # Download Elasticsearch in the given directory
-download_es $installdir
+download_es $installdir $filename
 
 # Extract Elasticsearch
 extract_es $installdir $filename
+
+# Delete Elasticsearch archive
+while :
+do
+    read -p "Delete Elasticsearch archive file (tar.gz)? [y/N]" esdelete
+    case $esdelete in
+        "y")
+            delete_es_archive $es_archive_path
+            break
+            ;;
+        "n")
+            echo -e "${GREEN}Skip deletion...${NC}\r\n"
+            break
+            ;;
+        "")
+            echo -e "${GREEN}Skip deletion...${NC}\r\n"
+            break
+            ;;
+        *)
+           echo -e "${RED}Incorrect input, try again.${NC}\r\n" 
+    esac
+done
 
 echo -e "${YELLOW}Congratulations! You're done!${NC}"
