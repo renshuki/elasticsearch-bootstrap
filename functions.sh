@@ -186,3 +186,36 @@ delete_kb_archive()
         exit 1
     fi
 }
+
+####################
+#                  #
+#     Services     #
+#                  #
+####################
+
+start_services()
+{
+    echo -e "Starting service(s)..."
+    es_path=`echo "$installdir/elasticsearch-$esversion"`
+    echo "$es_path"
+    if [ $kbdl == "y" ]; then
+        kb_path=`echo "$installdir/$kb_filename"|rev|cut -d"." -f3-|rev`
+        echo "$kb_path"
+        start_es $es_path
+        start_kb $kb_path
+    else
+        start_es $es_path
+    fi
+}
+
+start_es()
+{
+    nohup $1/bin/elasticsearch &
+    echo -e "${GREEN}Elasticsearch started at: http://localhost:9200${NC}\r\n"
+}
+
+start_kb()
+{
+    nohup $1/bin/kibana &
+    echo -e "${GREEN}Kibana started at: http://localhost:5601${NC}\r\n"
+}
