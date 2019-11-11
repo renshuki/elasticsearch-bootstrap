@@ -78,7 +78,7 @@ main() {
     download_es $installdir $es_filename
 
     # Extract Elasticsearch
-    #extract_es $installdir $es_filename
+    extract_es $installdir $es_filename
 
     # Delete Elasticsearch archive
     while :
@@ -127,7 +127,7 @@ main() {
     download_kb $installdir $kb_filename
 
     # Extract Kibana archive
-    #extract_kb $installdir $kb_filename
+    extract_kb $installdir $kb_filename
 
     # Delete Kibana archive
     while :
