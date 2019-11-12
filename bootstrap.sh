@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "functions.sh"
+source "lib/functions.sh"
 
 # COLORS
 RED='\033[0;31m'
