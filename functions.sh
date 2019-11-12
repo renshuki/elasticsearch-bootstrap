@@ -95,7 +95,7 @@ check_kb_standalone()
 
     if [[ "${POS[@]}" =~ "${installkb,,}" ]]; then
         check_version "Kibana"
-    else if [[ "${NEG[@]}" =~ "${installkb,,}" ]]; then
+    elif [[ "${NEG[@]}" =~ "${installkb,,}" ]]; then
         echo -e "${GREEN}Skip Kibana installation...${NC}\r\n"
     else
         echo -e "${RED}Incorrect input, try again.${NC}\r\n"
