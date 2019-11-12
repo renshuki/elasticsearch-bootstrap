@@ -1,7 +1,7 @@
 # elasticsearch-bootstrap
 Bootstrap your Elasticsearch installation!
 
-Works but need a bunch of refactoring.
+**STILL WORK IN PROGRESS, NEED REFACTORING**
 
 ## Features
  - OS auto-detection
