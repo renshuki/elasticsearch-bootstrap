@@ -49,11 +49,7 @@ main() {
     check_es_version
 
     # Check installation directory
-    while :
-    do
-        read -p "Choose your installation directory [${HOME}]: " installdir
-        check_install_dir $installdir
-    done
+    check_install_dir
 
     # Download Elasticsearch in the given directory
     download_es $installdir $es_filename

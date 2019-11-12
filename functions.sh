@@ -76,11 +76,13 @@ check_es_version()
 
 check_install_dir()
 {
-    if [ -d "$1" ]; then
-        echo -e "${GREEN}$1 is a directory.${NC}\r\n"
-        break
+    read -p "Choose your installation directory [${HOME}]: " installdir
+
+    if [ -d "$installdir" ]; then
+        echo -e "${GREEN}$installdir is a directory.${NC}\r\n"
     else
-        echo -e "${RED}$1 is not a directory.${NC}\r\n"
+        echo -e "${RED}$installdir is not a directory.${NC}\r\n"
+        check_install_dir
     fi  
 }
 
