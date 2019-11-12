@@ -30,11 +30,11 @@ main() {
                 break
                 ;;
             3)
-                check_os_version
+                check_os
                 break
                 ;;
             "")
-                check_os_version
+                check_os
                 break
                 ;;
             4)
@@ -46,11 +46,7 @@ main() {
     done
 
     # Check Elasticsearch version
-    while :
-    do
-        read -p "Elasticsearch version to install (e.g. 7.4.0): " esversion
-        check_es_version $ostype $esversion
-    done
+    check_es_version
 
     # Check installation directory
     while :

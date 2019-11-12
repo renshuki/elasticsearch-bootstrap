@@ -26,7 +26,7 @@ display_banner()
 #                  #
 ####################
 
-check_os_version()
+check_os()
 {
     if [ `uname` == "Linux" ]; then
         echo -e "${GREEN}Linux${NC}\r\n"
@@ -52,12 +52,14 @@ check_es_version()
 {
     base_es_url="https://artifacts.elastic.co/downloads/elasticsearch/"
 
-    case $1 in
+    read -p "Elasticsearch version to install (e.g. 7.4.0): " esversion
+
+    case $ostype in
         1)
-            es_filename="elasticsearch-$2-linux-x86_64.tar.gz"
+            es_filename="elasticsearch-$esversion-linux-x86_64.tar.gz"
             ;;
         2)
-            es_filename="elasticsearch-$2-darwin-x86_64.tar.gz"
+            es_filename="elasticsearch-$esversion-darwin-x86_64.tar.gz"
             ;;
     esac
 
@@ -65,10 +67,10 @@ check_es_version()
     http_response=`curl -I "$full_es_url" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
 
     if [[ $http_response == 200 ]]; then
-        echo -e "${GREEN}Elasticsearch version $2 found for $osname!${NC}\r\n"
-        break
+        echo -e "${GREEN}Elasticsearch version $esversion found for $osname!${NC}\r\n"
     else
-        echo -e "${RED}Elasticsearch version $2 not found for $osname! :/${NC}\r\n"
+        echo -e "${RED}Elasticsearch version $esversion not found for $osname! :/${NC}\r\n"
+        check_es_version
     fi
 }
 
