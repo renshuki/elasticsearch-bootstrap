@@ -48,29 +48,29 @@ check_os()
 #                  #
 ####################
 
-check_es_version()
+check_version()
 {
-    base_es_url="https://artifacts.elastic.co/downloads/elasticsearch/"
+    base_url="https://artifacts.elastic.co/downloads/${1,,}/"
 
-    read -p "Elasticsearch version to install (e.g. 7.4.0): " esversion
+    read -p "$1 version to install (e.g. 7.4.0): " version
 
     case $ostype in
         1)
-            es_filename="elasticsearch-$esversion-linux-x86_64.tar.gz"
+            filename="${1,,}-$version-linux-x86_64.tar.gz"
             ;;
         2)
-            es_filename="elasticsearch-$esversion-darwin-x86_64.tar.gz"
+            filename="${1,,}-$version-darwin-x86_64.tar.gz"
             ;;
     esac
 
-    full_es_url="$base_es_url$es_filename"
-    http_response=`curl -I "$full_es_url" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
+    full_url="$base_url$filename"
+    http_response=`curl -I "$full_url" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
 
     if [[ $http_response == 200 ]]; then
-        echo -e "${GREEN}Elasticsearch version $esversion found for $osname!${NC}\r\n"
+        echo -e "${GREEN}$1 version $version found for $osname!${NC}\r\n"
     else
-        echo -e "${RED}Elasticsearch version $esversion not found for $osname! :/${NC}\r\n"
-        check_es_version
+        echo -e "${RED}$1 version $version not found for $osname! :/${NC}\r\n"
+        check_version "$1"
     fi
 }
 
@@ -84,6 +84,23 @@ check_install_dir()
         echo -e "${RED}$installdir is not a directory.${NC}\r\n"
         check_install_dir
     fi  
+}
+
+check_kb_standalone()
+{
+    read -p "Download Kibana alongside Elasticsearch? [y/N]" installkb
+
+    POS=("y" "yes")
+    NEG=("n" "no")
+
+    if [[ "${POS[@]}" =~ "${installkb,,}" ]]; then
+        check_version "Kibana"
+    else if [[ "${NEG[@]}" =~ "${installkb,,}" ]]; then
+        echo -e "${GREEN}Skip Kibana installation...${NC}\r\n"
+    else
+        echo -e "${RED}Incorrect input, try again.${NC}\r\n"
+        check_kb_standalone
+    fi
 }
 
 download_es()

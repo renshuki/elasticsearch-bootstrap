@@ -46,10 +46,13 @@ main() {
     done
 
     # Check Elasticsearch version
-    check_es_version
+    check_version "Elasticsearch"
 
     # Check installation directory
     check_install_dir
+
+    # Kibana alongside Elasticsearch
+    check_kb_standalone
 
     # Download Elasticsearch in the given directory
     download_es $installdir $es_filename
@@ -76,27 +79,6 @@ main() {
                 ;;
             *)
                echo -e "${RED}Incorrect input, try again.${NC}\r\n" 
-        esac
-    done
-
-    # Kibana alongside Elasticsearch
-    while :
-    do
-        read -p "Download Kibana alongside Elasticsearch? [y/N]" kbdl
-        case $kbdl in
-            "y")
-                check_kb_version $ostype $kbdl
-                ;;
-            "n")
-                echo -e "${GREEN}Skip Kibana installation...${NC}\r\n"
-                break
-                ;;
-            "")
-                echo -e "${GREEN}Skip Kibana installation...${NC}\r\n"
-                break
-                ;;
-            *)
-                echo -e "${RED}Incorrect input, try again.${NC}\r\n" 
         esac
     done
 
