@@ -60,7 +60,7 @@ main() {
     # Extract Elasticsearch
     extract_es $installdir $es_filename
 
-    # Delete Elasticsearch archive
+    # Delete Elasticsearch tarball
     while :
     do
         read -p "Delete Elasticsearch archive file (tar.gz)? [y/N]" esdelete
@@ -88,7 +88,7 @@ main() {
     # Extract Kibana archive
     extract_kb $installdir $kb_filename
 
-    # Delete Kibana archive
+    # Delete Kibana tarball
     while :
     do
         read -p "Delete Kibana archive file (tar.gz)? [y/N]" kbdelete

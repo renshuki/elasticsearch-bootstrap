@@ -50,16 +50,18 @@ check_os()
 
 check_version()
 {
-    base_url="https://artifacts.elastic.co/downloads/${1,,}/"
+    stack_name=$1
+    stack_name_lc=$(lc "$stack_name")
+    base_url="https://artifacts.elastic.co/downloads/$stack_name_lc/"
 
     read -p "$1 version to install (e.g. 7.4.0): " version
 
     case $ostype in
         1)
-            filename="${1,,}-$version-linux-x86_64.tar.gz"
+            filename="$stack_name_lc-$version-linux-x86_64.tar.gz"
             ;;
         2)
-            filename="${1,,}-$version-darwin-x86_64.tar.gz"
+            filename="$stack_name_lc-$version-darwin-x86_64.tar.gz"
             ;;
     esac
 
@@ -67,10 +69,10 @@ check_version()
     http_response=`curl -I "$full_url" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
 
     if [[ $http_response == 200 ]]; then
-        echo -e "${GREEN}$1 version $version found for $osname!${NC}\r\n"
+        echo -e "${GREEN}$stack_name version $version found for $osname!${NC}\r\n"
     else
-        echo -e "${RED}$1 version $version not found for $osname! :/${NC}\r\n"
-        check_version "$1"
+        echo -e "${RED}$stack_name version $version not found for $osname! :/${NC}\r\n"
+        check_version "$stack_name"
     fi
 }
 
@@ -259,4 +261,17 @@ start_kb()
 {
     nohup $1/bin/kibana &
     echo -e "${GREEN}Kibana started at: http://localhost:5601${NC}\r\n"
+}
+
+####################
+#                  #
+#      General     #
+#                  #
+####################
+
+# Lowercase function 
+# (for compatibility with macOS as ${1,,} doesn't seem to be working)
+lc()
+{
+    echo "$1" | tr '[:upper:]' '[:lower:]'
 }
