@@ -132,7 +132,7 @@ extract()
 
     set_filename $stack_name_lc $version
 
-    archive_path=$installdir$filename
+    archive_path=$installdir/$filename
 
     echo "Extracting $stack_name from the archive..."
 
