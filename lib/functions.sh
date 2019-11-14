@@ -20,12 +20,6 @@ display_banner()
     echo -e "$banner"
 }
 
-####################
-#                  #
-#        OS        #
-#                  #
-####################
-
 check_os()
 {
     if [ `uname` == "Linux" ]; then
@@ -41,12 +35,6 @@ check_os()
         exit 1
     fi
 }
-
-####################
-#                  #
-#   Elasticsearch  #
-#                  #
-####################
 
 check_version()
 {
@@ -137,17 +125,24 @@ download()
     fi
 }
 
-extract_es()
+extract()
 {
-    echo "Extracting Elasticsearch from the archive..."
-    es_archive_path="$1/$2"
-    tar xzvf "$es_archive_path" --directory "$1"
+    stack_name=$1
+    stack_name_lc=$(lc "$stack_name")
+
+    set_filename $stack_name_lc $version
+
+    archive_path=$installdir$filename
+
+    echo "Extracting $stack_name from the archive..."
+
+    tar xzvf "$archive_path" --directory "$installdir"
     tar_res=$?
 
     if test "$tar_res" == "0"; then
-        echo -e "${GREEN}Elasticsearch extracted successfully!${NC}\r\n"
+        echo -e "${GREEN}$stack_name extracted successfully!${NC}\r\n"
     else
-        echo -e "${RED}Elasticsearch extraction failed.${NC}\r\n"
+        echo -e "${RED}$stack_name extraction failed.${NC}\r\n"
         exit 1
     fi
 }
@@ -171,21 +166,6 @@ delete_es_archive()
 #      Kibana      #
 #                  #
 ####################
-
-extract_kb()
-{
-    echo "Extracting Kibana from the archive..."
-    kb_archive_path="$1/$2"
-    tar xzvf "$kb_archive_path" --directory "$1"
-    tar_res=$?
-
-    if test "$tar_res" == "0"; then
-        echo -e "${GREEN}Kibana extracted successfully!${NC}\r\n"
-    else
-        echo -e "${RED}Kibana extraction failed.${NC}\r\n"
-        exit 1
-    fi
-}
 
 delete_kb_archive()
 {

@@ -63,7 +63,12 @@ main() {
     fi
 
     # Extract Elasticsearch
-    extract_es $installdir $es_filename
+    extract "Elasticsearch"
+
+    # Extract Kibana if previously downloaded
+    if [[ $installkb ]]; then
+        extract "Kibana"
+    fi
 
     # Delete Elasticsearch tarball
     while :
