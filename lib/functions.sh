@@ -172,49 +172,6 @@ delete_es_archive()
 #                  #
 ####################
 
-check_kb_version()
-{
-    kbversion=$esversion
-    base_kb_url="https://artifacts.elastic.co/downloads/kibana/"
-
-    case $1 in
-        1)
-            kb_filename="kibana-$kbversion-linux-x86_64.tar.gz"
-            ;;
-        2)
-            kb_filename="kibana-$kbversion-darwin-x86_64.tar.gz"
-            ;;
-    esac
-
-    full_kb_url="$base_kb_url$kb_filename"
-    http_response=`curl -I "$full_kb_url" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
-
-    if [[ $http_response == 200 ]]; then
-        echo -e "${GREEN}Kibana version $kbversion found for $osname!${NC}\r\n"
-        break
-    else
-        echo -e "${RED}Kibana version $kbversion not found for $osname! :/${NC}\r\n"
-    fi
-}
-
-download_kb()
-{
-    if [ -f "$installdir/$kb_filename" ]; then
-        echo -e "${RED}Kibana archive file already exists in this location. Skip.${NC}\r\n"
-    else
-        echo "Downloading Kibana ($esversion) for $osname..."
-        cd $1 && curl -O $full_kb_url
-        dl_res=$?
-
-        if test "$dl_res" == "0"; then
-            echo -e "${GREEN}Download completed successfully!${NC}\r\n"
-        else
-            echo -e "${RED}Download failed for some reasons.${NC}\r\n"
-            exit 1
-        fi
-    fi
-}
-
 extract_kb()
 {
     echo "Extracting Kibana from the archive..."

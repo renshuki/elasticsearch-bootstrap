@@ -57,6 +57,7 @@ main() {
     # Download Elasticsearch in the given directory
     download "Elasticsearch"
 
+    # Download Kibana if requested
     if [[ $installkb ]]; then
         download "Kibana"
     fi
@@ -85,9 +86,6 @@ main() {
                echo -e "${RED}Incorrect input, try again.${NC}\r\n" 
         esac
     done
-
-    # Download Kibana
-    download_kb $installdir $kb_filename
 
     # Extract Kibana archive
     extract_kb $installdir $kb_filename
