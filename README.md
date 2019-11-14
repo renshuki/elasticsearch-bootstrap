@@ -1,7 +1,7 @@
 # elasticsearch-bootstrap
 Bootstrap your Elasticsearch installation real quick for dev purpose!
 
-###**!!! STILL WORK IN PROGRESS, NEED REFACTORING !!!**
+### !!! STILL WORK IN PROGRESS, NEED REFACTORING !!!
 
 ## Usage
 
