@@ -55,7 +55,11 @@ main() {
     check_kb_standalone
 
     # Download Elasticsearch in the given directory
-    download_es $installdir $es_filename
+    download "Elasticsearch"
+
+    if [[ $installkb ]]; then
+        download "Kibana"
+    fi
 
     # Extract Elasticsearch
     extract_es $installdir $es_filename

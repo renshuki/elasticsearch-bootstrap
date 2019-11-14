@@ -56,14 +56,7 @@ check_version()
 
     read -p "$1 version to install (e.g. 7.4.0): " version
 
-    case $ostype in
-        1)
-            filename="$stack_name_lc-$version-linux-x86_64.tar.gz"
-            ;;
-        2)
-            filename="$stack_name_lc-$version-darwin-x86_64.tar.gz"
-            ;;
-    esac
+    set_filename $stack_name_lc $version
 
     full_url="$base_url$filename"
     http_response=`curl -I "$full_url" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
@@ -74,6 +67,18 @@ check_version()
         echo -e "${RED}$stack_name version $version not found for $osname! :/${NC}\r\n"
         check_version "$stack_name"
     fi
+}
+
+set_filename()
+{
+    case $ostype in
+        1)
+            filename="$1-$2-linux-x86_64.tar.gz"
+            ;;
+        2)
+            filename="$1-$2-darwin-x86_64.tar.gz"
+            ;;
+    esac
 }
 
 check_install_dir()
@@ -95,9 +100,11 @@ check_kb_standalone()
     POS=("y" "yes")
     NEG=("n" "no")
 
-    if [[ "${POS[@]}" =~ "${installkb,,}" ]]; then
-        check_version "Kibana"
-    elif [[ "${NEG[@]}" =~ "${installkb,,}" ]]; then
+    if [[ "${POS[@]}" =~ "$(lc "$installkb")" ]]; then
+        $installkb=true
+        echo -e "${GREEN}Kibana will get installed alongside Elasticsearch.${NC}\r\n"
+    elif [[ "${NEG[@]}" =~ "$(lc "$installkb")" ]]; then
+        $installkb=false
         echo -e "${GREEN}Skip Kibana installation...${NC}\r\n"
     else
         echo -e "${RED}Incorrect input, try again.${NC}\r\n"
@@ -105,13 +112,20 @@ check_kb_standalone()
     fi
 }
 
-download_es()
+download()
 {
-    if [ -f "$installdir/$es_filename" ]; then
-        echo -e "${RED}Elasticsearch archive file already exists in this location. Skip.${NC}\r\n"
+    stack_name=$1
+    stack_name_lc=$(lc "$stack_name")
+
+    set_filename $stack_name_lc $version
+
+    full_url="$base_url$filename"
+
+    if [ -f "$installdir/$filename" ]; then
+        echo -e "${RED}$stack_name archive file already exists in this location. Skip.${NC}\r\n"
     else
-        echo "Downloading Elasticsearch ($esversion) for $osname..."
-        cd $1 && curl -O $full_es_url
+        echo "Downloading $stack_name ($version) for $osname..."
+        cd $1 && curl -O $full_url
         dl_res=$?
 
         if test "$dl_res" == "0"; then
