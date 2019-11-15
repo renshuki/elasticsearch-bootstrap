@@ -41,7 +41,11 @@ check_version()
     stack_name=$1
     stack_name_lc=$(lc "$stack_name")
 
-    read -p "$1 version to install (e.g. 7.4.0): " version
+    read -p "$1 version to install [$(get_version 'elasticsearch' 'latest')]: " version
+
+    if [[ -z $version ]]; then
+        version=$(get_version 'elasticsearch' 'latest')
+    fi
 
     set_filename $stack_name_lc $version
     set_urls $stack_name_lc
@@ -241,4 +245,11 @@ set_filename()
             filename="$1-$2-darwin-x86_64.tar.gz"
             ;;
     esac
+}
+
+get_version()
+{
+    url=https://api.github.com/repos/elastic/$1/releases/$2
+    tag_name_json=$(curl -X GET "$url" 2>/dev/null | grep -o '"tag_name": "[^"]*' | grep -o '[^v]*$')
+    echo "$tag_name_json"
 }
