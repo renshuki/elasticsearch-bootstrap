@@ -89,10 +89,10 @@ check_kb_standalone()
     NEG=("n" "no")
 
     if [[ "${POS[@]}" =~ "$(lc "$installkb")" ]]; then
-        $installkb=true
+        installkb=true
         echo -e "${GREEN}Kibana will get installed alongside Elasticsearch.${NC}\r\n"
     elif [[ "${NEG[@]}" =~ "$(lc "$installkb")" ]]; then
-        $installkb=false
+        installkb=false
         echo -e "${GREEN}Skip Kibana installation...${NC}\r\n"
     else
         echo -e "${RED}Incorrect input, try again.${NC}\r\n"
