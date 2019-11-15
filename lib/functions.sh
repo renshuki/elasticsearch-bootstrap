@@ -57,24 +57,6 @@ check_version()
     fi
 }
 
-set_urls()
-{
-    base_url="https://artifacts.elastic.co/downloads/$stack_name_lc/"
-    full_url="$base_url$filename"
-}
-
-set_filename()
-{
-    case $ostype in
-        1)
-            filename="$1-$2-linux-x86_64.tar.gz"
-            ;;
-        2)
-            filename="$1-$2-darwin-x86_64.tar.gz"
-            ;;
-    esac
-}
-
 check_install_dir()
 {
     read -p "Choose your installation directory [${HOME}]: " installdir
@@ -195,26 +177,6 @@ delete()
 
 ####################
 #                  #
-#      Kibana      #
-#                  #
-####################
-
-delete_kb_archive()
-{
-    echo "Deleting Kibana archive file..."
-    rm -v "$kb_archive_path"
-    rm_res=$?
-
-    if test "$rm_res" == "0"; then
-        echo -e "${GREEN}Kibana archive file removed successfully!${NC}\r\n"
-    else
-        echo -e "${RED}Kibana archive file deletion failure.${NC}\r\n"
-        exit 1
-    fi
-}
-
-####################
-#                  #
 #     Services     #
 #                  #
 ####################
@@ -257,4 +219,24 @@ start_kb()
 lc()
 {
     echo "$1" | tr '[:upper:]' '[:lower:]'
+}
+
+# Set URLs
+set_urls()
+{
+    base_url="https://artifacts.elastic.co/downloads/$stack_name_lc/"
+    full_url="$base_url$filename"
+}
+
+# Set Filename
+set_filename()
+{
+    case $ostype in
+        1)
+            filename="$1-$2-linux-x86_64.tar.gz"
+            ;;
+        2)
+            filename="$1-$2-darwin-x86_64.tar.gz"
+            ;;
+    esac
 }

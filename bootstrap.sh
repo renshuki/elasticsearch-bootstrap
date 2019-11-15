@@ -78,31 +78,6 @@ main() {
         check_delete "Kibana"
     fi
 
-    # Extract Kibana archive
-    extract_kb $installdir $kb_filename
-
-    # Delete Kibana tarball
-    while :
-    do
-        read -p "Delete Kibana archive file (tar.gz)? [y/N]" kbdelete
-        case $kbdelete in
-            "y")
-                delete_kb_archive $es_archive_path
-                break
-                ;;
-            "n")
-                echo -e "${GREEN}Skip deletion...${NC}\r\n"
-                break
-                ;;
-            "")
-                echo -e "${GREEN}Skip deletion...${NC}\r\n"
-                break
-                ;;
-            *)
-               echo -e "${RED}Incorrect input, try again.${NC}\r\n" 
-        esac
-    done
-
     # Start Elasticsearch / Kibana
     while :
     do
