@@ -189,7 +189,7 @@ delete()
 
 check_start()
 {
-    read -p "Start Elasticsearch $(if [ -z $installkb ]; then echo "/ Kibana"; fi)? [y/N]" servstart
+    read -p "Start Elasticsearch $(if [[ $installkb = true ]]; then echo "/ Kibana"; fi)? [y/N]" servstart
 
     POS=("y" "yes")
     NEG=("n" "no")
