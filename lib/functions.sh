@@ -208,16 +208,14 @@ check_start()
     fi
 }
 
-start_es()
+start()
 {
-    nohup $1/bin/elasticsearch &
-    echo -e "${GREEN}Elasticsearch started at: http://localhost:9200${NC}\r\n"
-}
+    stack_name=$1
+    stack_name_lc=$(lc "$stack_name")
 
-start_kb()
-{
-    nohup $1/bin/kibana &
-    echo -e "${GREEN}Kibana started at: http://localhost:5601${NC}\r\n"
+    install_path="$installdir/$stack_name_lc-$version"
+    nohup $install_path/bin/$stack_name_lc &
+    echo -e "${GREEN}Elasticsearch started at: http://localhost:9200${NC}\r\n"
 }
 
 ####################
