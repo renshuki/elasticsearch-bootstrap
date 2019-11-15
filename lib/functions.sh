@@ -61,6 +61,8 @@ check_install_dir()
 {
     read -p "Choose your installation directory [${HOME}]: " installdir
 
+    if [ -z $installdir ]; then installdir="${HOME}"; fi
+
     if [ -d "$installdir" ]; then
         echo -e "${GREEN}$installdir is a directory.${NC}\r\n"
     else
