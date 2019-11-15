@@ -16,7 +16,7 @@ main() {
     # Check OS
     while :
     do
-        echo -e "Select your Operating System:\n 1. Linux\n 2. macOS\n 3. Auto-detect\n 4. Quit\r\n"
+        echo -e "Select your Operating System:\n 1. Linux\n 2. Darwin (macOS)\n 3. Auto-detect\n 4. Quit\r\n"
         read -p "[Auto-detect]: " ostype
         case $ostype in
             1)
@@ -26,7 +26,7 @@ main() {
                 ;;
             2)
                 echo -e  "${GREEN}macOS${NC}\r\n"
-                osname="macOS"
+                osname="Darwin"
                 break
                 ;;
             3)
