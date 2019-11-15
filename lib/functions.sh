@@ -27,9 +27,9 @@ check_os()
         ostype=1
         osname="Linux"
     elif [ `uname` == "Darwin" ]; then
-        echo -e  "${GREEN}macOS${NC}\r\n"
+        echo -e  "${GREEN}Darwin (macOS)${NC}\r\n"
         ostype=2
-        osname="macOS"
+        osname="Darwin"
     else
         echo -e  "${RED}Unknown OS. Abort.${NC}\r\n"
         exit 1
@@ -198,7 +198,7 @@ check_start()
         servstart=true
         echo -e "Starting service(s)..."
         start "Elasticsearch"
-        if [ -z $installkb ]; then start "Kibana"; fi
+        if [ $installkb = true ]; then start "Kibana"; fi
     elif [[ "${NEG[@]}" =~ "$(lc "$servstart")" || (-z $servstart) ]]; then
         servstart=false
         echo -e "${GREEN}Skip service(s) startup.${NC}\r\n"
@@ -213,9 +213,14 @@ start()
     stack_name=$1
     stack_name_lc=$(lc "$stack_name")
 
-    install_path="$installdir/$stack_name_lc-$version"
-    nohup $install_path/bin/$stack_name_lc &
-    echo -e "${GREEN}Elasticsearch started at: http://localhost:9200${NC}\r\n"
+    if [[ $stack_name = "Kibana" ]]; then
+        install_path="$installdir/$stack_name_lc-$version-$(lc $osname)-x86_64"
+    else
+        install_path="$installdir/$stack_name_lc-$version"
+    fi
+
+    nohup $install_path/bin/$stack_name_lc > "$stack_name_lc.out" &
+    echo -e "${GREEN}$stack_name started at: http://localhost:9200${NC}\r\n"
 }
 
 ####################
@@ -241,14 +246,8 @@ set_urls()
 # Set Filename
 set_filename()
 {
-    case $ostype in
-        1)
-            filename="$1-$2-linux-x86_64.tar.gz"
-            ;;
-        2)
-            filename="$1-$2-darwin-x86_64.tar.gz"
-            ;;
-    esac
+
+    filename="$1-$2-$(lc $osname)-x86_64.tar.gz"
 }
 
 # Get version of a stack product
