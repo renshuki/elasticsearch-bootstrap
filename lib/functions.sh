@@ -81,7 +81,7 @@ check_kb_standalone()
     if [[ "${POS[@]}" =~ "$(lc "$installkb")" ]]; then
         installkb=true
         echo -e "${GREEN}Kibana will get installed alongside Elasticsearch.${NC}\r\n"
-    elif [[ "${NEG[@]}" =~ "$(lc "$installkb")" ]]; then
+    elif [[ "${NEG[@]}" =~ "$(lc "$installkb")" || (-z $installkb) ]]; then
         installkb=false
         echo -e "${GREEN}Skip Kibana installation...${NC}\r\n"
     else
@@ -154,7 +154,7 @@ check_delete()
     if [[ "${POS[@]}" =~ "$(lc "$delete")" ]]; then
         delete=true
         delete $stack_name $archive_path
-    elif [[ "${NEG[@]}" =~ "$(lc "$delete")" ]]; then
+    elif [[ "${NEG[@]}" =~ "$(lc "$delete")" || (-z $delete) ]]; then
         delete=false
         echo -e "${GREEN}Skip deletion...${NC}\r\n"
     else
