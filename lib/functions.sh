@@ -40,11 +40,11 @@ check_version()
 {
     stack_name=$1
     stack_name_lc=$(lc "$stack_name")
-    base_url="https://artifacts.elastic.co/downloads/$stack_name_lc/"
 
     read -p "$1 version to install (e.g. 7.4.0): " version
 
     set_filename $stack_name_lc $version
+    set_urls $stack_name_lc
 
     full_url="$base_url$filename"
     http_response=`curl -I "$full_url" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
@@ -55,6 +55,12 @@ check_version()
         echo -e "${RED}$stack_name version $version not found for $osname! :/${NC}\r\n"
         check_version "$stack_name"
     fi
+}
+
+set_urls()
+{
+    base_url="https://artifacts.elastic.co/downloads/$stack_name_lc/"
+    full_url="$base_url$filename"
 }
 
 set_filename()
@@ -78,7 +84,7 @@ check_install_dir()
     else
         echo -e "${RED}$installdir is not a directory.${NC}\r\n"
         check_install_dir
-    fi  
+    fi
 }
 
 check_kb_standalone()
@@ -106,8 +112,7 @@ download()
     stack_name_lc=$(lc "$stack_name")
 
     set_filename $stack_name_lc $version
-
-    full_url="$base_url$filename"
+    set_urls $stack_name_lc
 
     if [ -f "$installdir/$filename" ]; then
         echo -e "${RED}$stack_name archive file already exists in this location. Skip.${NC}\r\n"
@@ -220,7 +225,7 @@ start_kb()
 #                  #
 ####################
 
-# Lowercase function 
+# Lowercase function
 # (for compatibility with macOS as ${1,,} doesn't seem to be working)
 lc()
 {
