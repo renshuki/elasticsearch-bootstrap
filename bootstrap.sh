@@ -79,26 +79,7 @@ main() {
     fi
 
     # Start Elasticsearch / Kibana
-    while :
-    do
-        read -p "Start Elasticsearch / Kibana? [Y/n]" servstart
-        case $servstart in
-            "y")
-                start_services
-                break
-                ;;
-            "n")
-                echo -e "${GREEN}Skip services startup.${NC}\r\n"
-                break
-                ;;
-            "")
-                start_services
-                break
-                ;;
-            *)
-               echo -e "${RED}Incorrect input, try again.${NC}\r\n" 
-        esac
-    done
+    check_start
 
     echo -e "${YELLOW}Congratulations! You're done!${NC}"
 }

@@ -163,7 +163,7 @@ check_delete()
         echo -e "${GREEN}Skip deletion...${NC}\r\n"
     else
         echo -e "${RED}Incorrect input, try again.${NC}\r\n"
-        delete $stack_name
+        check_delete $stack_name
     fi
 }
 
@@ -187,18 +187,24 @@ delete()
 #                  #
 ####################
 
-start_services()
+check_start()
 {
-    echo -e "Starting service(s)..."
-    es_path=`echo "$installdir/elasticsearch-$esversion"`
-    echo "$es_path"
-    if [ $kbdl == "y" ]; then
-        kb_path=`echo "$installdir/$kb_filename"|rev|cut -d"." -f3-|rev`
-        echo "$kb_path"
-        start_es $es_path
-        start_kb $kb_path
+    read -p "Start Elasticsearch $(if [ -z $installkb ]; then echo "/ Kibana"; fi)? [y/N]" servstart
+
+    POS=("y" "yes")
+    NEG=("n" "no")
+
+    if [[ "${POS[@]}" =~ "$(lc "$servstart")" ]]; then
+        servstart=true
+        echo -e "Starting service(s)..."
+        start "Elasticsearch"
+        if [ -z $installkb ]; then start "Kibana"; fi
+    elif [[ "${NEG[@]}" =~ "$(lc "$servstart")" || (-z $servstart) ]]; then
+        servstart=false
+        echo -e "${GREEN}Skip service(s) startup.${NC}\r\n"
     else
-        start_es $es_path
+        echo -e "${RED}Incorrect input, try again.${NC}\r\n"
+        check_start
     fi
 }
 
