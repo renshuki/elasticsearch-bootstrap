@@ -152,16 +152,43 @@ extract()
     fi
 }
 
-delete_es_archive()
+check_delete()
 {
-    echo "Deleting Elasticsearch archive file..."
-    rm -v "$es_archive_path"
+
+    stack_name=$1
+    stack_name_lc=$(lc "$stack_name")
+
+    set_filename $stack_name_lc $version
+
+    archive_path=$installdir/$filename
+
+    read -p "Delete $stack_name archive file (tar.gz)? [y/N]" delete
+
+    POS=("y" "yes")
+    NEG=("n" "no")
+
+    if [[ "${POS[@]}" =~ "$(lc "$delete")" ]]; then
+        delete=true
+        delete $stack_name $archive_path
+    elif [[ "${NEG[@]}" =~ "$(lc "$delete")" ]]; then
+        delete=false
+        echo -e "${GREEN}Skip deletion...${NC}\r\n"
+    else
+        echo -e "${RED}Incorrect input, try again.${NC}\r\n"
+        delete $stack_name
+    fi
+}
+
+delete()
+{
+    echo -e "Deleting $stack_name archive file..."
+    rm -v "$archive_path"
     rm_res=$?
 
     if test "$rm_res" == "0"; then
-        echo -e "${GREEN}Elasticsearch archive file removed successfully!${NC}\r\n"
+        echo -e "${GREEN}$stack_name archive file removed successfully!${NC}\r\n"
     else
-        echo -e "${RED}Elasticsearch archive file deletion failure.${NC}\r\n"
+        echo -e "${RED}$stack_name archive file deletion failure.${NC}\r\n"
         exit 1
     fi
 }

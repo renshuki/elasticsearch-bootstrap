@@ -70,27 +70,13 @@ main() {
         extract "Kibana"
     fi
 
-    # Delete Elasticsearch tarball
-    while :
-    do
-        read -p "Delete Elasticsearch archive file (tar.gz)? [y/N]" esdelete
-        case $esdelete in
-            "y")
-                delete_es_archive $es_archive_path
-                break
-                ;;
-            "n")
-                echo -e "${GREEN}Skip deletion...${NC}\r\n"
-                break
-                ;;
-            "")
-                echo -e "${GREEN}Skip deletion...${NC}\r\n"
-                break
-                ;;
-            *)
-               echo -e "${RED}Incorrect input, try again.${NC}\r\n" 
-        esac
-    done
+    # Check delete Elasticsearch tarball
+    check_delete "Elasticsearch"
+
+    # Check delete Kibana tarball
+    if [[ $installkb ]]; then
+        check_delete "Kibana"
+    fi
 
     # Extract Kibana archive
     extract_kb $installdir $kb_filename
