@@ -58,7 +58,8 @@ main() {
     download "Elasticsearch"
 
     # Download Kibana if requested
-    if [[ $installkb ]]; then
+    if [[ $installkb = true ]]; then
+        echo "installkb Triggered!"
         download "Kibana"
     fi
 
@@ -66,7 +67,7 @@ main() {
     extract "Elasticsearch"
 
     # Extract Kibana if previously downloaded
-    if [[ $installkb ]]; then
+    if [[ $installkb = true ]]; then
         extract "Kibana"
     fi
 
@@ -74,7 +75,7 @@ main() {
     check_delete "Elasticsearch"
 
     # Check delete Kibana tarball
-    if [[ $installkb ]]; then
+    if [[ $installkb = true ]]; then
         check_delete "Kibana"
     fi
 
