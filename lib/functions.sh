@@ -247,6 +247,7 @@ set_filename()
     esac
 }
 
+# Get version of a stack product
 get_version()
 {
     url=https://api.github.com/repos/elastic/$1/releases/$2
