@@ -113,7 +113,7 @@ download()
         echo -e "${RED}$stack_name archive file already exists in this location. Skip.${NC}\r\n"
     else
         echo "Downloading $stack_name ($version) for $osname..."
-        cd $1 && curl -O $full_url
+        cd $installdir && curl -O $full_url
         dl_res=$?
 
         if test "$dl_res" == "0"; then
