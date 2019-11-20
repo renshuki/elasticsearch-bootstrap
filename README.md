@@ -1,8 +1,6 @@
 # elasticsearch-bootstrap
 Bootstrap your Elasticsearch installation real quick for dev purpose!
 
-### !!! STILL WORK IN PROGRESS, NEED REFACTORING !!!
-
 ## Usage
 
 1) `chmod u+x ./bootstrap.sh` if needed
