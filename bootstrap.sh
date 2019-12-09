@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source "lib/functions.sh"
+BASE_DIR=$(dirname "$(realpath "$0")")
+
+source "$BASE_DIR/lib/functions.sh"
 
 # COLORS
 RED='\033[0;31m'
