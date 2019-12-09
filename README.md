@@ -7,6 +7,9 @@ Bootstrap your Elasticsearch installation real quick for dev purpose!
 2) Execute `./bootstrap.sh`
 3) Follow the instructions to bootstrap your Elasticsearch installation!
 
+> Note: You can even add a symlink to call the script from any directory:  
+> `sudo ln -s ~/code/elasticsearch-bootstrap/bootstrap.sh /usr/bin/esdl`
+
 ## Features
  - Mac & Linux compatible
  - OS auto-detection
