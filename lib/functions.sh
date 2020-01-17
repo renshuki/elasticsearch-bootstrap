@@ -63,9 +63,9 @@ check_version()
 
 check_install_dir()
 {
-    read -p "Choose your installation directory [${HOME}]: " installdir
+    read -p "Choose your installation directory [${PWD}]: " installdir
 
-    if [ -z $installdir ]; then installdir="${HOME}"; fi
+    if [ -z $installdir ]; then installdir="${PWD}"; fi
 
     if [ -d "$installdir" ]; then
         echo -e "${GREEN}$installdir is a directory.${NC}\r\n"
