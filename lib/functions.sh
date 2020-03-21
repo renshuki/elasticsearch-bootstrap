@@ -246,8 +246,16 @@ set_urls()
 # Set Filename
 set_filename()
 {
-
-    filename="$1-$2-$(lc $osname)-x86_64.tar.gz"
+    # Version 5.x
+    if [[ $2 == 5* ]]; then
+        filename="$1-$2.tar.gz"
+    # Version 6.x
+    elif [[ $2 == 6* ]]; then
+        filename="$1-$2.tar.gz"
+    # Version 7.x
+    elif [[ $2 == 7* ]]; then
+        filename="$1-$2-$(lc $osname)-x86_64.tar.gz"
+    fi
 }
 
 # Get version of a stack product
