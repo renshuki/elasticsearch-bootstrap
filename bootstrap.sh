@@ -61,7 +61,6 @@ main() {
 
     # Download Kibana if requested
     if [[ $installkb = true ]]; then
-        echo "installkb Triggered!"
         download "Kibana"
     fi
 
