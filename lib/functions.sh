@@ -106,16 +106,31 @@ download()
         echo -e "${RED}$stack_name archive file already exists in this location. Skip.${NC}\r\n"
     else
         echo "Downloading $stack_name ($version) for $osname..."
-        cd $installdir && curl -# -O $full_url
+        #cd $installdir && curl -# -O $full_url
+        dl_urls="${dl_urls} $full_url"
 
         dl_res=$?
 
         if test "$dl_res" == "0"; then
-            echo -e "${GREEN}Download completed successfully!${NC}\r\n"
+            echo -e "${GREEN}Downloading...${NC}\r\n"
         else
-            echo -e "${RED}Download failed for some reasons.${NC}\r\n"
+            echo -e "${RED}Download initialization failed for some reasons.${NC}\r\n"
             exit 1
         fi
+    fi
+}
+
+parallel_download()
+{
+    echo $dl_urls | xargs -n 1 -P 2 wget -q
+
+    dl_res=$?
+
+    if test "$dl_res" == "0"; then
+        echo -e "${GREEN}Download completed successfully!${NC}\r\n"
+    else
+        echo -e "${RED}Download failed for some reasons.${NC}\r\n"
+        exit 1
     fi
 }
 

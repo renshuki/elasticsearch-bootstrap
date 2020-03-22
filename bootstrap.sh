@@ -64,6 +64,8 @@ main() {
         download "Kibana"
     fi
 
+    parallel_download # To speed up things
+
     # Extract Elasticsearch
     extract "Elasticsearch"
 
